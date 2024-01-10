@@ -1,8 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Asset 2@300x.png",
-      "idiom" : "universal"
+      "filename" : "Asset 2300x.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
