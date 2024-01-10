@@ -228,7 +228,7 @@ struct DigFruit: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 334, height:333)
-                    .position(x: geometry.size.width / 2 + 214, y: geometry.size.height / 2 + 220)
+                    .position(x: geometry.size.width / 2 + 214, y: geometry.size.height / 2 + 218)
                     .zIndex(5)
                 if hasWon {
                     
