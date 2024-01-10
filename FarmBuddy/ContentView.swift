@@ -28,6 +28,10 @@ struct ContentView: View {
             Lebah(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKeempatView.swift
         case .Ikan:
             Ikan(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKeempatView.swift
+        case .DigFruit:
+            DigFruit(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKeempatView.swift
+        case .PuzzlePage:
+            PuzzlePage(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKeempatView.swift
         case .home:
             ZStack {
                 Image("bgstart")
@@ -82,6 +86,8 @@ enum DisplayMode {
     case Telur
     case Lebah
     case Ikan
+    case PuzzlePage
+    case DigFruit
 }
 #Preview {
     ContentView()

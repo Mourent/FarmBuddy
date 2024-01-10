@@ -25,6 +25,8 @@
 		0445FFFA2B4E4D950043D23A /* PaytoneOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0445FFF92B4E4D950043D23A /* PaytoneOne-Regular.ttf */; };
 		0445FFFD2B4E4F510043D23A /* Telur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FFFC2B4E4F510043D23A /* Telur.swift */; };
 		0445FFFF2B4E55190043D23A /* Lebah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FFFE2B4E55190043D23A /* Lebah.swift */; };
+		046A349D2B4E88AC00CD8561 /* galiBuah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A349C2B4E88AC00CD8561 /* galiBuah.swift */; };
+		046A349F2B4E88CE00CD8561 /* puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A349E2B4E88CE00CD8561 /* puzzle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		0445FFFB2B4E4E1C0043D23A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0445FFFC2B4E4F510043D23A /* Telur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telur.swift; sourceTree = "<group>"; };
 		0445FFFE2B4E55190043D23A /* Lebah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lebah.swift; sourceTree = "<group>"; };
+		046A349C2B4E88AC00CD8561 /* galiBuah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = galiBuah.swift; sourceTree = "<group>"; };
+		046A349E2B4E88CE00CD8561 /* puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = puzzle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 				0445FFF22B4E47B70043D23A /* HewanMasuk.swift */,
 				0445FFFC2B4E4F510043D23A /* Telur.swift */,
 				0445FFEE2B4E477F0043D23A /* BuahHitung.swift */,
+				046A349C2B4E88AC00CD8561 /* galiBuah.swift */,
+				046A349E2B4E88CE00CD8561 /* puzzle.swift */,
 				0445FFEA2B4E473B0043D23A /* Soundtrack.swift */,
 				0445FFC62B4E46C50043D23A /* Preview Content */,
 			);
@@ -300,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046A349F2B4E88CE00CD8561 /* puzzle.swift in Sources */,
 				0445FFEB2B4E473B0043D23A /* Soundtrack.swift in Sources */,
 				0445FFFD2B4E4F510043D23A /* Telur.swift in Sources */,
 				044500012B4E572E0043D23A /* Ikan.swift in Sources */,
@@ -308,6 +315,7 @@
 				0445FFC32B4E46C20043D23A /* ContentView.swift in Sources */,
 				0445FFEF2B4E477F0043D23A /* BuahHitung.swift in Sources */,
 				0445FFC12B4E46C20043D23A /* FarmBuddyApp.swift in Sources */,
+				046A349D2B4E88AC00CD8561 /* galiBuah.swift in Sources */,
 				0445FFF32B4E47B70043D23A /* HewanMasuk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
