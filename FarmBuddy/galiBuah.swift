@@ -89,8 +89,8 @@ struct DigFruit: View {
                 Text("\(angka)")
                     .font(.system(size: 80, weight: .bold))
                     .foregroundColor(.red)
-                    .position(CGPoint(x: widthLayar * 0.71, y: heightLayar * 0.376))
-                    .border(Color.black)
+                    .position(CGPoint(x: widthLayar * 0.69, y: heightLayar * 0.376))
+                   
 
                 Image("df-cewe")
                     .resizable()
@@ -241,7 +241,7 @@ struct DigFruit: View {
                             .scaleEffect(0.5)
                         
                         Button {
-                            displayMode = .home
+                            displayMode = .BuahHitung
                         } label: {
                             Image("next")
                                 .resizable()

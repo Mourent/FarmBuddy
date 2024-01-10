@@ -261,7 +261,7 @@ struct PuzzlePage: View {
                                 .scaleEffect(0.5)
                             
                             Button {
-                                displayMode = .home
+                                displayMode = .DigFruit
                             } label: {
                                 Image("next")
                                     .resizable()

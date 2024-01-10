@@ -176,7 +176,7 @@ struct Ikan: View {
                             .scaleEffect(0.5)
                         
                         Button {
-                            displayMode = .BuahHitung
+                            displayMode = .PuzzlePage
                             //                    isPeternakanHitungActive = true
                         } label: {
                             Image("next")
