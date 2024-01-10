@@ -133,7 +133,7 @@ struct PuzzlePage: View {
                     //                isStartActive = true
                     toggleMusic()
                 } label: {
-                    Image(isMusicPlaying ? "lagu" : "lagu")
+                    Image(isMusicPlaying ? "lagu" : "lagumati")
                         .resizable()
                         .scaledToFit()
                 }

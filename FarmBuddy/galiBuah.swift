@@ -29,7 +29,7 @@ struct DigFruit: View {
     let maxTaps = 3
     @State private var angka: Int = Int.random(in: 1...7)
     let randomVegetableType = Bool.random() ? "radish" : "beetroot"
-
+    
     @State private var selectedPieceID: UUID?
     @State private var activePieceID: UUID?
     @State private var activeDragOffset: CGSize = .zero
@@ -38,8 +38,8 @@ struct DigFruit: View {
     @State private var correctlyPlacedRadishes = 0
     
     @State private var hasWon: Bool = false
-
-        
+    
+    
     var body: some View {
         GeometryReader { geometry in
             
@@ -61,8 +61,9 @@ struct DigFruit: View {
                 
                 Button {
                     toggleMusic()
-                } label: {
-                    Image(isMusicPlaying ? "lagu" : "lagu")
+                } label:
+                {
+                    Image(isMusicPlaying ? "lagu" : "lagumati")
                         .resizable()
                         .scaledToFit()
                 }
@@ -85,13 +86,13 @@ struct DigFruit: View {
                     .scaledToFit()
                     .frame(width: 140, height:140)
                     .position(CGPoint(x: widthLayar * 0.76, y: heightLayar * 0.35))
-                    
+                
                 Text("\(angka)")
                     .font(.system(size: 80, weight: .bold))
                     .foregroundColor(.red)
                     .position(CGPoint(x: widthLayar * 0.69, y: heightLayar * 0.376))
-                   
-
+                
+                
                 Image("df-cewe")
                     .resizable()
                     .scaledToFit()
@@ -183,30 +184,22 @@ struct DigFruit: View {
                                         
                                         if isInBox {
                                             sayur.isCorrectlyPlaced = true
-                                            correctlyPlacedRadishes = 0
-                                                correctlyPlacedBeetroots = 0
-                                                for item in sayuran {
-                                                    if item.name == "radish" && item.isCorrectlyPlaced == true {
-                                                        correctlyPlacedRadishes += 1
-                                                    }
-                                                    if item.name == "beetroot" && item.isCorrectlyPlaced == true {
-                                                        correctlyPlacedBeetroots += 1
-                                                    }
-                                                }
+                                            hitungBuah()
                                             checkWinCondition()
+                                            withAnimation {
+                                                if sayur.currentPosition.x < geometry.size.width / 2 + 210 - (215 / 2) { // kiri
+                                                    sayur.currentPosition.x = geometry.size.width / 2 + 210 - (200 / 2)
+                                                } else if sayur.currentPosition.x > geometry.size.width / 2 + 210 + (215 / 2) { // kanan
+                                                    sayur.currentPosition.x = geometry.size.width / 2 + 210 + (200 / 2)
+                                                }
+                                                sayur.currentPosition.y = geometry.size.height / 2 + 150
+                                                
+                                                
+                                            }
                                             
                                         } else {
                                             sayur.isCorrectlyPlaced = false
-                                            correctlyPlacedRadishes = 0
-                                                correctlyPlacedBeetroots = 0
-                                                for item in sayuran {
-                                                    if item.name == "radish" && item.isCorrectlyPlaced == true {
-                                                        correctlyPlacedRadishes += 1
-                                                    }
-                                                    if item.name == "beetroot" && item.isCorrectlyPlaced == true {
-                                                        correctlyPlacedBeetroots += 1
-                                                    }
-                                                }
+                                            hitungBuah()
                                         }
                                         print("beetroot :\(correctlyPlacedBeetroots)")
                                         print("radish :\(correctlyPlacedRadishes)")
@@ -231,7 +224,12 @@ struct DigFruit: View {
                         .position(tanah.currentPosition)
                         .offset(y:70)
                 }
-                
+                Image("df-basket-depan")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 334, height:333)
+                    .position(x: geometry.size.width / 2 + 214, y: geometry.size.height / 2 + 220)
+                    .zIndex(5)
                 if hasWon {
                     
                     ZStack{
@@ -258,7 +256,7 @@ struct DigFruit: View {
                             .foregroundColor(.white)
                             .font(.custom("PaytoneOne-Regular", size: 50))
                             .position(CGPoint(x: widthLayar * 0.50, y: heightLayar * 0.275))
-                    }.zIndex(4)
+                    }.zIndex(6)
                     
                 }
                 
@@ -338,6 +336,18 @@ struct DigFruit: View {
         if randomVegetableType == "beetroot" && angka == correctlyPlacedBeetroots{
             print("completed!")
             hasWon = true
+        }
+    }
+    private func hitungBuah() {
+        correctlyPlacedRadishes = 0
+        correctlyPlacedBeetroots = 0
+        for item in sayuran {
+            if item.name == "radish" && item.isCorrectlyPlaced == true {
+                correctlyPlacedRadishes += 1
+            }
+            if item.name == "beetroot" && item.isCorrectlyPlaced == true {
+                correctlyPlacedBeetroots += 1
+            }
         }
     }
     func toggleMusic() {

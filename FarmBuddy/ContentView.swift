@@ -53,7 +53,7 @@ struct ContentView: View {
                 
                 Button {
 //                    isBUAHActive = true
-                    displayMode = .BuahHitung
+                    displayMode = .PuzzlePage
                 } label: {
                     Image("buttonplay")
                 }
