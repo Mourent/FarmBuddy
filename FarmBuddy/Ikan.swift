@@ -137,7 +137,7 @@ struct Ikan: View {
                                         withAnimation(.easeInOut(duration: 1.0)) {
                                             ikanOffset[index] = CGSize(
                                                 width: widthLayar*0.5 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.73 - CGFloat(dataYAwal[index]))
+                                                height: (heightLayar * 0.7 - CGFloat(dataYAwal[index]))
                                             )
                                         }
                                         simpan = index
@@ -145,7 +145,7 @@ struct Ikan: View {
                                         withAnimation(.easeInOut(duration: 1.0)) {
                                             ikanOffset[index] = CGSize(
                                                 width: widthLayar*0.5 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.73 - CGFloat(dataYAwal[index]))
+                                                height: (heightLayar * 0.7 - CGFloat(dataYAwal[index]))
                                             )
                                         }
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -194,7 +194,7 @@ struct Ikan: View {
                             .foregroundColor(.white)
                             .font(.custom("PaytoneOne-Regular", size: 50))
                             .position(CGPoint(x: widthLayar * 0.50, y: heightLayar * 0.275))
-                    }.zIndex(layer + 2)
+                    }.zIndex(layer + 50)
                 }
                 if showingSalah {
                     ZStack{
@@ -223,7 +223,7 @@ struct Ikan: View {
                             .font(.custom("PaytoneOne-Regular", size: 50))
                             .position(CGPoint(x: widthLayar * 0.503, y: heightLayar * 0.275))
                         
-                    }.zIndex(layer + 2)
+                    }.zIndex(layer + 50)
                 }
             }
         }
