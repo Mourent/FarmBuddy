@@ -130,7 +130,6 @@ struct BuahHitung: View {
                     .font(.system(size: 55, weight: .bold))
                     .foregroundColor(.red)
                     .position(CGPoint(x: widthLayar * 0.23, y: heightLayar * 0.404))
-                    .border(Color.black)
             }
     
             ForEach(0..<7) { index in

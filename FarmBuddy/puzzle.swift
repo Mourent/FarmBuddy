@@ -419,12 +419,14 @@ struct PuzzlePage: View {
     }
 }
 
-//struct puzzle_previews: PreviewProvider {
-//    @State static var displayMode: DisplayMode = .puzzle
-//
-//    static var previews: some View {
-//        PuzzlePage(displayMode: $displayMode)
-//    }
-//}
+struct puzzle_previews: PreviewProvider {
+    @State static var displayMode: DisplayMode = .PuzzlePage
+    @State static var isMusicPlaying: Bool = true
+    
+    
+    static var previews: some View {
+        PuzzlePage(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
+    }
+}
 
 

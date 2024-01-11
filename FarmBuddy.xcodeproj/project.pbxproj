@@ -27,7 +27,6 @@
 		0445FFFF2B4E55190043D23A /* Lebah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FFFE2B4E55190043D23A /* Lebah.swift */; };
 		046A349D2B4E88AC00CD8561 /* galiBuah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A349C2B4E88AC00CD8561 /* galiBuah.swift */; };
 		046A349F2B4E88CE00CD8561 /* puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A349E2B4E88CE00CD8561 /* puzzle.swift */; };
-		04CAED2B2B4EF005001ABC52 /* capture.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04CAED2A2B4EF005001ABC52 /* capture.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +69,6 @@
 		0445FFFE2B4E55190043D23A /* Lebah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lebah.swift; sourceTree = "<group>"; };
 		046A349C2B4E88AC00CD8561 /* galiBuah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = galiBuah.swift; sourceTree = "<group>"; };
 		046A349E2B4E88CE00CD8561 /* puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = puzzle.swift; sourceTree = "<group>"; };
-		04CAED2A2B4EF005001ABC52 /* capture.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = capture.mp3; path = ../../../../../Downloads/capture.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +167,6 @@
 		0445FFF42B4E47D60043D23A /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				04CAED2A2B4EF005001ABC52 /* capture.mp3 */,
 				0445FFF52B4E481B0043D23A /* soundtrack.mp3 */,
 			);
 			path = Sound;
@@ -279,7 +276,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04CAED2B2B4EF005001ABC52 /* capture.mp3 in Resources */,
 				0445FFC82B4E46C50043D23A /* Preview Assets.xcassets in Resources */,
 				0445FFF62B4E481B0043D23A /* soundtrack.mp3 in Resources */,
 				0445FFC52B4E46C50043D23A /* Assets.xcassets in Resources */,

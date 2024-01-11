@@ -361,7 +361,7 @@ struct DigFruit: View {
 }
 
 
-struct puzzle_previews: PreviewProvider {
+struct digfruit_previews: PreviewProvider {
     @State static var displayMode: DisplayMode = .DigFruit
     @State static var isMusicPlaying: Bool = true
     
