@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-
+import CoreData
 struct Sayur: Identifiable {
     let id = UUID()
     var name: String
@@ -39,6 +39,24 @@ struct DigFruit: View {
     
     @State private var hasWon: Bool = false
     
+    @Environment(\.managedObjectContext) private var viewContext
+    private func addItemCount(itemId: String,count:Int32) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id_item == %@", itemId)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let itemToReduce = results.first {
+                itemToReduce.count += count  // Asumsikan Anda memiliki property `count` pada entitas `Item`
+                try viewContext.save()
+                print("ke db")
+                
+            }
+        } catch let error as NSError {
+            // Handle errors here
+            print("Error nambah item count: \(error), \(error.userInfo)")
+        }
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -69,7 +87,15 @@ struct DigFruit: View {
                 }
                 .frame(width:100,height:80)
                 .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
-                
+                Button {
+                    displayMode = .shop
+                } label:{
+                    Image("shop-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(width:100,height:80)
+                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
                 Image("df-basket")
                     .resizable()
                     .scaledToFit()
@@ -239,6 +265,8 @@ struct DigFruit: View {
                             .scaleEffect(0.5)
                         
                         Button {
+                            addItemCount(itemId: "2", count: Int32(Int.random(in: 1...3)))
+                            addItemCount(itemId: "9", count: Int32(Int.random(in: 1...3)))
                             displayMode = .BuahHitung
                         } label: {
                             Image("next")

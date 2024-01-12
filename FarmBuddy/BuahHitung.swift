@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CoreData
 
 struct BuahHitung: View {
     @Binding var isMusicPlaying: Bool
@@ -43,9 +43,28 @@ struct BuahHitung: View {
     @State private var dragingAllow: [Bool] = Array(repeating: true, count: 7)
     @State private var boxPenuh: [Bool] = Array(repeating: false, count: 7)
     @State private var zIndexValues: [Double] = Array(repeating: 0.0, count: 7)
-   
+    @State private var showInventory = false
     @Binding var displayMode: DisplayMode
     
+    @Environment(\.managedObjectContext) private var viewContext
+    private func addItemCount(itemId: String,count:Int32) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id_item == %@", itemId)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let itemToReduce = results.first {
+                itemToReduce.count += count  // Asumsikan Anda memiliki property `count` pada entitas `Item`
+                try viewContext.save()
+                print("ke db")
+                
+            }
+        } catch let error as NSError {
+            // Handle errors here
+            print("Error nambah item count: \(error), \(error.userInfo)")
+        }
+    }
+    @State private var showingInventory = false
     var body: some View {
         ZStack {
             Image("bg")
@@ -102,8 +121,35 @@ struct BuahHitung: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08))
-
+            Button {
+                displayMode = .shop
+            } label:{
+                Image("shop-logo")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
             
+            Button {showInventory = true
+            }
+        label:{
+                Image("bag-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+        .frame(width:100,height:80)
+        .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+            .sheet(isPresented: $showInventory) {
+                InventoryView()
+            }
+            
+                    
+            
+                    
+                    
+        
+                   
             Button("SUBMIT") {
                 if (applesInBasket == angka){
                     showingBenar = true
@@ -331,6 +377,7 @@ struct BuahHitung: View {
     
                 Button {
 //                    isPeternakanHitungActive = true
+                    addItemCount(itemId: "1", count: Int32(Int.random(in: 1...5)))
                     displayMode = .buah
                 } label: {
                     Image("next")

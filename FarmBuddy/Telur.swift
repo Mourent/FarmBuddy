@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct Telur: View {
     @Binding var isMusicPlaying: Bool
     @Binding var displayMode: DisplayMode
@@ -80,6 +80,25 @@ struct Telur: View {
     @State private var angka: Int = 0
     @State private var miring: [Double] = [0, -30, -15]
     
+    @Environment(\.managedObjectContext) private var viewContext
+    private func addItemCount(itemId: String,count:Int32) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id_item == %@", itemId)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let itemToReduce = results.first {
+                itemToReduce.count += count  // Asumsikan Anda memiliki property `count` pada entitas `Item`
+                try viewContext.save()
+                print("ke db")
+                
+            }
+        } catch let error as NSError {
+            // Handle errors here
+            print("Error nambah item count: \(error), \(error.userInfo)")
+        }
+    }
+    
     var body: some View {
         ZStack {
             Image("stage ayam telur")
@@ -108,7 +127,15 @@ struct Telur: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
-            
+            Button {
+                displayMode = .shop
+            } label:{
+                Image("shop-logo")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
             Button("SUBMIT") {
                 if (telurInBasket == angka){
                     showingBenar = true
@@ -479,6 +506,7 @@ struct Telur: View {
                         .scaleEffect(0.5)
                     
                     Button {
+                        addItemCount(itemId: "4", count: Int32(Int.random(in: 1...5)))
                         displayMode = .Lebah
                     } label: {
                         Image("next")

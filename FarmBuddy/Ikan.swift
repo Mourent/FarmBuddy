@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct Ikan: View {
     @Binding var isMusicPlaying: Bool
     @Binding var displayMode: DisplayMode
@@ -38,6 +38,25 @@ struct Ikan: View {
     @State private var zIndexValues: [Double] = Array(repeating: 0.0, count: 5)
     @State private var layer: Double = 1
     
+    @Environment(\.managedObjectContext) private var viewContext
+    private func addItemCount(itemId: String,count:Int32) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id_item == %@", itemId)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let itemToReduce = results.first {
+                itemToReduce.count += count  // Asumsikan Anda memiliki property `count` pada entitas `Item`
+                try viewContext.save()
+                print("ke db")
+                
+            }
+        } catch let error as NSError {
+            // Handle errors here
+            print("Error nambah item count: \(error), \(error.userInfo)")
+        }
+    }
+
     var body: some View {
         ZStack {
             Image("bgikan")
@@ -66,7 +85,15 @@ struct Ikan: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.07))
-            
+            Button {
+                displayMode = .shop
+            } label:{
+                Image("shop-logo")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
             Button("SUBMIT") {
                 if (simpan == angka){
                     showingBenar = true
@@ -176,6 +203,7 @@ struct Ikan: View {
                             .scaleEffect(0.5)
                         
                         Button {
+                            addItemCount(itemId: "1", count: Int32(Int.random(in: 1...3)))
                             displayMode = .PuzzlePage
                             //                    isPeternakanHitungActive = true
                         } label: {

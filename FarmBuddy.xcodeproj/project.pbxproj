@@ -25,6 +25,11 @@
 		0445FFFA2B4E4D950043D23A /* PaytoneOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0445FFF92B4E4D950043D23A /* PaytoneOne-Regular.ttf */; };
 		0445FFFD2B4E4F510043D23A /* Telur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FFFC2B4E4F510043D23A /* Telur.swift */; };
 		0445FFFF2B4E55190043D23A /* Lebah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FFFE2B4E55190043D23A /* Lebah.swift */; };
+		0455D70F2B50A7CC000C6734 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455D70E2B50A7CC000C6734 /* Persistence.swift */; };
+		0455D7112B50A7D9000C6734 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455D7102B50A7D9000C6734 /* Shop.swift */; };
+		0455D7142B50A7FA000C6734 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0455D7122B50A7FA000C6734 /* Model.xcdatamodeld */; };
+		0455D7162B50A88E000C6734 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455D7152B50A88E000C6734 /* Inventory.swift */; };
+		0455D7182B50A8A0000C6734 /* Items.json in Resources */ = {isa = PBXBuildFile; fileRef = 0455D7172B50A8A0000C6734 /* Items.json */; };
 		046A349D2B4E88AC00CD8561 /* galiBuah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A349C2B4E88AC00CD8561 /* galiBuah.swift */; };
 		046A349F2B4E88CE00CD8561 /* puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046A349E2B4E88CE00CD8561 /* puzzle.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +72,11 @@
 		0445FFFB2B4E4E1C0043D23A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0445FFFC2B4E4F510043D23A /* Telur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Telur.swift; sourceTree = "<group>"; };
 		0445FFFE2B4E55190043D23A /* Lebah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lebah.swift; sourceTree = "<group>"; };
+		0455D70E2B50A7CC000C6734 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		0455D7102B50A7D9000C6734 /* Shop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
+		0455D7132B50A7FA000C6734 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		0455D7152B50A88E000C6734 /* Inventory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
+		0455D7172B50A8A0000C6734 /* Items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Items.json; sourceTree = "<group>"; };
 		046A349C2B4E88AC00CD8561 /* galiBuah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = galiBuah.swift; sourceTree = "<group>"; };
 		046A349E2B4E88CE00CD8561 /* puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = puzzle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,8 +133,13 @@
 				0445FFF92B4E4D950043D23A /* PaytoneOne-Regular.ttf */,
 				0445FFF42B4E47D60043D23A /* Sound */,
 				0445FFC02B4E46C20043D23A /* FarmBuddyApp.swift */,
+				0455D7172B50A8A0000C6734 /* Items.json */,
+				0455D7152B50A88E000C6734 /* Inventory.swift */,
 				0445FFC22B4E46C20043D23A /* ContentView.swift */,
 				0445FFC42B4E46C50043D23A /* Assets.xcassets */,
+				0455D70E2B50A7CC000C6734 /* Persistence.swift */,
+				0455D7102B50A7D9000C6734 /* Shop.swift */,
+				0455D7122B50A7FA000C6734 /* Model.xcdatamodeld */,
 				0445FFEC2B4E476B0043D23A /* buah.swift */,
 				044500002B4E572E0043D23A /* Ikan.swift */,
 				0445FFFE2B4E55190043D23A /* Lebah.swift */,
@@ -276,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0455D7182B50A8A0000C6734 /* Items.json in Resources */,
 				0445FFC82B4E46C50043D23A /* Preview Assets.xcassets in Resources */,
 				0445FFF62B4E481B0043D23A /* soundtrack.mp3 in Resources */,
 				0445FFC52B4E46C50043D23A /* Assets.xcassets in Resources */,
@@ -309,12 +325,16 @@
 				046A349F2B4E88CE00CD8561 /* puzzle.swift in Sources */,
 				0445FFEB2B4E473B0043D23A /* Soundtrack.swift in Sources */,
 				0445FFFD2B4E4F510043D23A /* Telur.swift in Sources */,
+				0455D7142B50A7FA000C6734 /* Model.xcdatamodeld in Sources */,
 				044500012B4E572E0043D23A /* Ikan.swift in Sources */,
 				0445FFFF2B4E55190043D23A /* Lebah.swift in Sources */,
 				0445FFED2B4E476B0043D23A /* buah.swift in Sources */,
 				0445FFC32B4E46C20043D23A /* ContentView.swift in Sources */,
 				0445FFEF2B4E477F0043D23A /* BuahHitung.swift in Sources */,
+				0455D7112B50A7D9000C6734 /* Shop.swift in Sources */,
 				0445FFC12B4E46C20043D23A /* FarmBuddyApp.swift in Sources */,
+				0455D70F2B50A7CC000C6734 /* Persistence.swift in Sources */,
+				0455D7162B50A88E000C6734 /* Inventory.swift in Sources */,
 				046A349D2B4E88AC00CD8561 /* galiBuah.swift in Sources */,
 				0445FFF32B4E47B70043D23A /* HewanMasuk.swift in Sources */,
 			);
@@ -640,6 +660,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0455D7122B50A7FA000C6734 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0455D7132B50A7FA000C6734 /* Model.xcdatamodel */,
+			);
+			currentVersion = 0455D7132B50A7FA000C6734 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0445FFB52B4E46C20043D23A /* Project object */;
 }

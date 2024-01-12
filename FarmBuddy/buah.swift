@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct buah: View {
     @Binding var isMusicPlaying: Bool
@@ -54,7 +55,25 @@ struct buah: View {
     @State private var simpanPerubahanHeight: [CGFloat] = []
     @State private var tabrak: [Bool] = Array(repeating: false, count: 9)
 
-    
+    @Environment(\.managedObjectContext) private var viewContext
+    private func addItemCount(itemId: String,count:Int32) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id_item == %@", itemId)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let itemToReduce = results.first {
+                itemToReduce.count += count  // Asumsikan Anda memiliki property `count` pada entitas `Item`
+                try viewContext.save()
+                print("ke db")
+                
+            }
+        } catch let error as NSError {
+            // Handle errors here
+            print("Error nambah item count: \(error), \(error.userInfo)")
+        }
+    }
+
     var body: some View {
         ZStack {
             
@@ -88,7 +107,15 @@ struct buah: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08))
-
+            Button {
+                displayMode = .shop
+            } label:{
+                Image("shop-logo")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
             
             Image("box")
                 .resizable()
@@ -315,6 +342,8 @@ struct buah: View {
                     
                     Button {
                         //                    isPeternakanHitungActive = true
+                        addItemCount(itemId: "1", count: Int32(Int.random(in: 1...4)))
+                        addItemCount(itemId: "7", count: Int32(Int.random(in: 1...4)))
                         displayMode = .HewanMasuk
                     } label: {
                         Image("next")

@@ -12,6 +12,8 @@ import Foundation
 
 
 struct Shop: View {
+    @Binding var isMusicPlaying: Bool
+    @Binding var displayMode: DisplayMode
     @State private var showCoin: Bool = false
     @State private var coinPosition: CGFloat = 0.0
     @State private var coinOpacity: Double = 1.0
@@ -19,12 +21,14 @@ struct Shop: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.name, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
     @State private var showingInventory = false
     @State private var draggingItem: Item?
     @State var dragState = DragState()
+    @State private var heightLayar = UIScreen.main.bounds.height
+    @State private var widthLayar = UIScreen.main.bounds.width
     //    // Misalkan ini adalah data dari inventory Anda
     //    let inventoryItems: [(name: String, image: String, count: Int)] = [
     //        ("Apple", "apple", 10),
@@ -66,6 +70,7 @@ struct Shop: View {
                         
                     }
                 
+                
                 //                ZStack{
                 Image("shop-dalem")
                     .resizable()
@@ -90,9 +95,7 @@ struct Shop: View {
                 //                        .frame(width: fullGeometry.size.width*0.77)
                 //                        .position(x:fullGeometry.size.width/2,y: fullGeometry.size.height*0.6/2)
                 //
-                    .onAppear(){
-                        initializeBuyerData()
-                    }
+                
                 
                 Image("shop")
                     .resizable()
@@ -109,7 +112,7 @@ struct Shop: View {
                                 Image("box-jual")
                                     .resizable()
                                     .scaledToFit()
-
+                                
                                 DropAreaView(buyers: $buyers, index: index, droppedItem: $droppedItem,showCoin:$showCoin,coinPosition:$coinPosition,coinOpacity:$coinOpacity)
                                     .frame(height: fullGeometry.size.width * 0.4 / 3)
                                 Image("golds") // Ganti dengan nama aset uang Anda
@@ -126,15 +129,15 @@ struct Shop: View {
                                             self.coinOpacity = 0 // Uang menjadi transparan di akhir animasi
                                         }
                                     }
-
+                                
                             }
                             .frame(width: fullGeometry.size.width * 0.70 / 3)
-
+                            
                             ZStack {
                                 Image("pesenan")
                                     .resizable()
                                     .scaledToFit()
-
+                                
                                 OrderView(buyers: $buyers, index: index)
                                     .frame(width: fullGeometry.size.width * 0.65 / 3)
                             }
@@ -185,18 +188,31 @@ struct Shop: View {
                     HStack{
                         Image("gold").resizable().scaledToFit()
                             .frame(width:panjangBox/6)
-                    Spacer()
+                        Spacer()
                         WalletView()
                     }.padding(.horizontal,30)
                 }.frame(width: panjangBox)
                     .position(x:fullGeometry.size.width-panjangBox,y:panjangBox/6)
+                Button {
+        //                isStartActive = true
+                    displayMode = .home
+                } label: {
+                    Image("panah")
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(width:100,height:80)
+                .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             }
             
             
             
         }
-        
+        .onAppear(){
+            initializeBuyerData()
+        }
     }
+    
     //    private func initializeBuyerData() {
     //            // Cek apakah sudah ada data tersimpan
     //            let buyers = loadBuyerData()
@@ -221,13 +237,13 @@ struct Shop: View {
             saveBuyerData(buyerData)
             buyers = buyerData
         }
-//        else{
-//            
-//            
-//            for index in buyers.indices{
-//                buyers[index].orders=[createNewOrder()]
-//            }
-//        }
+        else{
+            
+            
+            for index in buyers.indices{
+                buyers[index].orders=[createNewOrder()]
+            }
+        }
         print("Initialize Kelar")
     }
     
@@ -237,6 +253,7 @@ struct Shop: View {
         } else {
             return "defaultImage" // Nama gambar default jika item tidak ditemukan
         }
+       
     }
 
     
@@ -327,10 +344,20 @@ struct OrderView: View {
 
 
 
-#Preview {
-    Shop().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-}
+//#Preview {
+//    @State  var displayMode: DisplayMode = .shop
+//    @State  var isMusicPlaying: Bool = true
+//    Shop(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+//}
 
+struct Shop_Preview: PreviewProvider {
+    @State static var displayMode: DisplayMode = .shop
+    @State static var isMusicPlaying: Bool = true
+
+    static var previews: some View {
+        Shop(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+}
 
 struct pageDalemView: View {
     @Binding var currentIndex: Int
@@ -518,9 +545,9 @@ struct pageDalemView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: panjangBox)
-                    .overlay(
-                                        Rectangle().fill(Color.blue.opacity(0.5))
-                                        )
+//                    .overlay(
+//                                        Rectangle().fill(Color.blue.opacity(0.5))
+//                                        )
             }
         }
         .scaledToFit()

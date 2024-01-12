@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct Lebah: View {
     @Binding var isMusicPlaying: Bool
     @Binding var displayMode: DisplayMode
@@ -43,6 +43,26 @@ struct Lebah: View {
     @State private var showingBenar: Bool = false
     @State private var showingSalah: Bool = false
     
+    @Environment(\.managedObjectContext) private var viewContext
+    private func addItemCount(itemId: String,count:Int32) {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id_item == %@", itemId)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest)
+            if let itemToReduce = results.first {
+                itemToReduce.count += count  // Asumsikan Anda memiliki property `count` pada entitas `Item`
+                try viewContext.save()
+                print("ke db")
+                
+            }
+        } catch let error as NSError {
+            // Handle errors here
+            print("Error nambah item count: \(error), \(error.userInfo)")
+        }
+    }
+
+    
     var body: some View {
         ZStack{
             Image("bglebah")
@@ -71,7 +91,15 @@ struct Lebah: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.96, y: heightLayar * 0.05))
-            
+            Button {
+                displayMode = .shop
+            } label:{
+                Image("shop-logo")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
             Button("SUBMIT") {
                 if (beeCount == angka){
                     showingBenar = true
@@ -166,6 +194,7 @@ struct Lebah: View {
                         .scaleEffect(0.5)
                     
                     Button {
+                        addItemCount(itemId: "6", count: Int32(Int.random(in: 1...4)))
                         //                    isPeternakanHitungActive = true
                         displayMode = .Ikan
                     } label: {

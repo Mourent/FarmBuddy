@@ -1,6 +1,6 @@
 //
 //  Persistence.swift
-//  vifim
+//
 //
 //  Created by MacBook Pro on 11/01/24.
 //
@@ -15,7 +15,7 @@ struct PersistenceController {
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            newItem.name = "nama"
         }
         do {
             try viewContext.save()
@@ -31,7 +31,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "vifim")
+        container = NSPersistentContainer(name: "Model")
         let viewContext = container.viewContext
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")

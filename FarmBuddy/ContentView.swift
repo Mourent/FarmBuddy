@@ -4,10 +4,18 @@
 //
 //  Created by MacBook Pro on 22/11/23.
 //
-
+import CoreData
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        animation: .default)
+    private var items: FetchedResults<Item>
+    @State private var showingInventory = false
+    
     @State private var heightLayar = UIScreen.main.bounds.height
     @State private var widthLayar = UIScreen.main.bounds.width
     @State private var isBUAHActive = false
@@ -66,6 +74,10 @@ struct ContentView: View {
 //                BuahHitung()
 //                ContentView().hidden()
 //            }
+        case .shop:
+            Shop(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
+        case .bag:
+            InventoryView()
         }
     }
     func toggleMusic() {
@@ -88,7 +100,10 @@ enum DisplayMode {
     case Ikan
     case PuzzlePage
     case DigFruit
+    case shop
+    case bag
 }
 #Preview {
     ContentView()
 }
+

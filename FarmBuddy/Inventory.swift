@@ -7,11 +7,10 @@ struct InventoryView: View {
         animation: .default)
     private var inventoryItems: FetchedResults<Item>
 
-    @State var isPresented = false // Untuk mengontrol pop-up
+    @State var isPresented = true // Langsung tampilkan pop-up
 
     var body: some View {
-        Button("Show Inventory") {
-            self.isPresented = true
+        VStack {
         }
         .sheet(isPresented: $isPresented) {
             VStack {
@@ -48,11 +47,14 @@ struct InventoryView: View {
                             .shadow(radius: 10)
                         }
                     }
-                }.padding(.horizontal) // Menambahkan padding secara horizontal
-                    .padding(.bottom, 10)
+                }.padding(.horizontal)
+                 .padding(.bottom, 10)
             }
             .padding(.top)
             .background(Color.yellow)
+        }
+        .onAppear {
+            self.isPresented = true
         }
     }
 }
