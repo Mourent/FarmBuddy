@@ -109,6 +109,8 @@
 import SwiftUI
 import CoreData
 struct HewanMasuk: View {
+    @State private var heightLayar = UIScreen.main.bounds.height
+    @State private var widthLayar = UIScreen.main.bounds.width
     @Binding var isMusicPlaying: Bool
     @Binding var displayMode: DisplayMode
     @State private var forbiddenArea_Kandang_Kiri: CGRect = .zero
@@ -123,7 +125,8 @@ struct HewanMasuk: View {
     @State private var TotalNumber: Int = 10
     @State private var WinCounter: Int = 0
     @State private var showingBenar = false
-    
+    @State private var showInventory = false
+
     @State private var chickenSize: CGSize = CGSize(width: 100, height: 100) // Ukuran gambar ayam
     @State private var sheepSize: CGSize = CGSize(width: 150, height: 150)
     @State private var minX: CGFloat = 50
@@ -183,6 +186,15 @@ struct HewanMasuk: View {
                 }
                 .frame(width:100,height:80)
                 .position(CGPoint(x: fullGeometry.size.width * 0.95, y: fullGeometry.size.height * 0.1))
+//                Button {
+//                    displayMode = .shop
+//                } label:{
+//                    Image("shop-logo")
+//                        .resizable()
+//                        .scaledToFit()
+//                }
+//                .frame(width:100,height:80)
+//                .position(CGPoint(x: fullGeometry.size.width * 0.95, y: fullGeometry.size.height * 0.08 + 80))
                 Button {
                     displayMode = .shop
                 } label:{
@@ -191,7 +203,20 @@ struct HewanMasuk: View {
                         .scaledToFit()
                 }
                 .frame(width:100,height:80)
-                .position(CGPoint(x: fullGeometry.size.width * 0.95, y: fullGeometry.size.height * 0.08 + 80))
+                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+                
+                Button {showInventory = true
+                }
+            label:{
+                    Image("bag-logo")
+                            .resizable()
+                            .scaledToFit()
+                    }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+                .sheet(isPresented: $showInventory) {
+                    InventoryView()
+                }
                 
                 // Objek terlarang yang akan menentukan area terlarang
                 

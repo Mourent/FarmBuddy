@@ -79,7 +79,8 @@ struct Telur: View {
         }
     @State private var angka: Int = 0
     @State private var miring: [Double] = [0, -30, -15]
-    
+    @State private var showInventory = false
+
     @Environment(\.managedObjectContext) private var viewContext
     private func addItemCount(itemId: String,count:Int32) {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
@@ -127,6 +128,16 @@ struct Telur: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+//            Button {
+//                displayMode = .shop
+//            } label:{
+//                Image("shop-logo")
+//                    .resizable()
+//                    .scaledToFit()
+//            }
+//            .frame(width:100,height:80)
+//            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
             Button {
                 displayMode = .shop
             } label:{
@@ -136,6 +147,21 @@ struct Telur: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
+            Button {showInventory = true
+            }
+        label:{
+                Image("bag-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+        .frame(width:100,height:80)
+        .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+            .sheet(isPresented: $showInventory) {
+                InventoryView()
+            }
+            
+            
             Button("SUBMIT") {
                 if (telurInBasket == angka){
                     showingBenar = true

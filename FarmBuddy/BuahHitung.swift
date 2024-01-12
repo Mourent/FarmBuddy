@@ -121,6 +121,8 @@ struct BuahHitung: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08))
+            
+            
             Button {
                 displayMode = .shop
             } label:{

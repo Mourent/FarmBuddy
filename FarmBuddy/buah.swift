@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct buah: View {
+    @State private var showInventory = false
+
     @Binding var isMusicPlaying: Bool
     @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 9)
     @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 9)
@@ -107,6 +109,16 @@ struct buah: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08))
+//            Button {
+//                displayMode = .shop
+//            } label:{
+//                Image("shop-logo")
+//                    .resizable()
+//                    .scaledToFit()
+//            }
+//            .frame(width:100,height:80)
+//            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
             Button {
                 displayMode = .shop
             } label:{
@@ -116,6 +128,19 @@ struct buah: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
+            Button {showInventory = true
+            }
+        label:{
+                Image("bag-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+        .frame(width:100,height:80)
+        .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+            .sheet(isPresented: $showInventory) {
+                InventoryView()
+            }
             
             Image("box")
                 .resizable()

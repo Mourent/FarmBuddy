@@ -8,6 +8,8 @@
 import SwiftUI
 import CoreData
 struct Lebah: View {
+    @State private var showInventory = false
+
     @Binding var isMusicPlaying: Bool
     @Binding var displayMode: DisplayMode
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -91,6 +93,16 @@ struct Lebah: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.96, y: heightLayar * 0.05))
+//            Button {
+//                displayMode = .shop
+//            } label:{
+//                Image("shop-logo")
+//                    .resizable()
+//                    .scaledToFit()
+//            }
+//            .frame(width:100,height:80)
+//            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
             Button {
                 displayMode = .shop
             } label:{
@@ -100,6 +112,20 @@ struct Lebah: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
+            Button {showInventory = true
+            }
+        label:{
+                Image("bag-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+        .frame(width:100,height:80)
+        .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+            .sheet(isPresented: $showInventory) {
+                InventoryView()
+            }
+            
             Button("SUBMIT") {
                 if (beeCount == angka){
                     showingBenar = true

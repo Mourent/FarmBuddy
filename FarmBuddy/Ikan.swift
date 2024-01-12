@@ -8,6 +8,8 @@
 import SwiftUI
 import CoreData
 struct Ikan: View {
+    @State private var showInventory = false
+
     @Binding var isMusicPlaying: Bool
     @Binding var displayMode: DisplayMode
     @State private var showingBenar: Bool = false
@@ -85,6 +87,16 @@ struct Ikan: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.07))
+//            Button {
+//                displayMode = .shop
+//            } label:{
+//                Image("shop-logo")
+//                    .resizable()
+//                    .scaledToFit()
+//            }
+//            .frame(width:100,height:80)
+//            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
             Button {
                 displayMode = .shop
             } label:{
@@ -94,6 +106,20 @@ struct Ikan: View {
             }
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+            
+            Button {showInventory = true
+            }
+        label:{
+                Image("bag-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+        .frame(width:100,height:80)
+        .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+            .sheet(isPresented: $showInventory) {
+                InventoryView()
+            }
+            
             Button("SUBMIT") {
                 if (simpan == angka){
                     showingBenar = true

@@ -105,7 +105,8 @@ struct PuzzlePage: View {
     
     private let scaleEffectInBox: CGFloat = 0.7 // The scale for pieces inside the box
     private let scaleEffectNormal: CGFloat = 1.0 // The normal scale for pieces
-    
+    @State private var showInventory = false
+
     var body: some View {
         GeometryReader { geometry in
             
@@ -139,6 +140,29 @@ struct PuzzlePage: View {
                 }
                 .frame(width:100,height:80)
                 .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+                
+                Button {
+                    displayMode = .shop
+                } label:{
+                    Image("shop-logo")
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(width:100,height:80)
+                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+                
+                Button {showInventory = true
+                }
+            label:{
+                    Image("bag-logo")
+                            .resizable()
+                            .scaledToFit()
+                    }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+                .sheet(isPresented: $showInventory) {
+                    InventoryView()
+                }
                 
                 Image("puzzle-1")
                     .resizable()

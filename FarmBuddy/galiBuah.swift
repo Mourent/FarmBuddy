@@ -8,7 +8,7 @@ struct Sayur: Identifiable {
     var isAnimating = false
     var isHarvested = false
     var currentPosition: CGPoint = .zero
-    var size: CGSize = CGSize(width: 160, height: 150)
+    var size: CGSize = CGSize(width: 130, height: 130)
     var isCorrectlyPlaced: Bool = false
 }
 struct Tanah: Identifiable {
@@ -36,9 +36,13 @@ struct DigFruit: View {
     
     @State private var correctlyPlacedBeetroots = 0
     @State private var correctlyPlacedRadishes = 0
+    @GestureState private var sayurSwipeGesture: CGSize = .zero
+    @State private var isSwipeActive = false
+    @State private var showTapIcon = false
     
     @State private var hasWon: Bool = false
-    
+    @State private var showInventory = false
+
     @Environment(\.managedObjectContext) private var viewContext
     private func addItemCount(itemId: String,count:Int32) {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
@@ -87,6 +91,15 @@ struct DigFruit: View {
                 }
                 .frame(width:100,height:80)
                 .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+//                Button {
+//                    displayMode = .shop
+//                } label:{
+//                    Image("shop-logo")
+//                        .resizable()
+//                        .scaledToFit()
+//                }
+//                .frame(width:100,height:80)
+//                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
                 Button {
                     displayMode = .shop
                 } label:{
@@ -96,6 +109,19 @@ struct DigFruit: View {
                 }
                 .frame(width:100,height:80)
                 .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 80))
+                
+                Button {showInventory = true
+                }
+            label:{
+                    Image("bag-logo")
+                            .resizable()
+                            .scaledToFit()
+                    }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.08 + 160))
+                .sheet(isPresented: $showInventory) {
+                    InventoryView()
+                }
                 Image("df-basket")
                     .resizable()
                     .scaledToFit()
@@ -122,49 +148,79 @@ struct DigFruit: View {
                 Image("df-cewe")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 210)
-                    .position(x: geometry.size.width - 150, y: geometry.size.height / 2 + 220)
+                    .frame(width: 200)
+                    .position(x: geometry.size.width - 120, y: geometry.size.height / 2 + 220)
                 
                 
                 Image("df-tanah-1")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 650)
+                    .frame(width: 550)
                     .position(x: geometry.size.width / 2-310, y: geometry.size.height / 2 + 90)
                 
                 Image("df-tanah-1")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 650)
+                    .frame(width: 550)
                     .position(x: geometry.size.width / 2-310, y: geometry.size.height / 2 + 310)
                 
                 ForEach($sayuran) { $sayur in
                     if sayur.isHarvested == false {
-                        Image("df-\(sayur.name)-2")
-                            .resizable()
-                            .scaledToFit()
-                            .zIndex(sayur.id == selectedPieceID ? 2 : 1)
-                            .frame(width: sayur.size.width, height: sayur.size.height)
-                            .rotationEffect(.degrees(sayur.isAnimating ? 10 : 0))
-                            .position(x: sayur.currentPosition.x, y: sayur.currentPosition.y)
-                            .opacity(sayur.isAnimating ? 0.5 : 1.0)
-                            .animation(sayur.isAnimating ? .easeInOut(duration: 0.15).repeatCount(5, autoreverses: true) : .default, value: sayur.isAnimating)
-                            .onTapGesture {
-                                if sayur.taps < maxTaps {
-                                    sayur.taps += 1
-                                    withAnimation {
-                                        sayur.isAnimating = true
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        ZStack{
+                            Image("df-\(sayur.name)-2")
+                                .resizable()
+                                .scaledToFit()
+                                .zIndex(sayur.id == selectedPieceID ? 2 : 1)
+                                .frame(width: sayur.size.width, height:  sayur.size.height)
+                                .rotationEffect(.degrees(sayur.isAnimating ? 10 : 0))
+                                .position(x: sayur.currentPosition.x, y: sayur.currentPosition.y)
+                                .opacity(sayur.isAnimating ? 0.5 : 1.0)
+                                .animation(sayur.isAnimating ? .easeInOut(duration: 0.15).repeatCount(5, autoreverses: true) : .default, value: sayur.isAnimating)
+                                .onTapGesture {
+                                    if sayur.taps < maxTaps {
+                                        sayur.taps += 1
                                         withAnimation {
-                                            sayur.isAnimating = false
+                                            sayur.isAnimating = true
+                                        }
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                            withAnimation {
+                                                sayur.isAnimating = false
+                                            }
+                                        }
+                                        if sayur.taps == maxTaps {
+                                            sayur.isHarvested = true
                                         }
                                     }
-                                    if sayur.taps == maxTaps {
-                                        sayur.isHarvested = true
-                                    }
                                 }
-                            }
+                            if isSwipeActive && showTapIcon {
+                                            Image(systemName: "hand.tap.fill")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 160, height: 160)
+                                                .opacity(1.0)
+                                                .offset(sayurSwipeGesture)
+                                                .onAppear {
+                                                                        startTimer()
+                                                                    }
+                                        }
+                        }
+                        .gesture(
+                                    DragGesture(minimumDistance: 5, coordinateSpace: .local)
+                                        .onChanged { _ in
+                                            if !sayur.isAnimating {
+                                                isSwipeActive = true
+                                                showTapIcon = true
+                                                
+                                                startTimer()
+
+                                            }
+                                        }
+                                        .onEnded { _ in
+                                            
+//                                            isSwipeActive = false
+                                            startTimer()
+                                        }
+                                )
                     }
                     
                     if sayur.isHarvested == true {
@@ -241,14 +297,14 @@ struct DigFruit: View {
                         .scaledToFit()
                         .frame(height: 30)
                         .position(tanah.currentPosition)
-                        .offset(y:70)
+                        .offset(y:60)
                     
                     Image("df-tanah-3")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 30)
                         .position(tanah.currentPosition)
-                        .offset(y:70)
+                        .offset(y:55)
                 }
                 Image("df-basket-depan")
                     .resizable()
@@ -293,51 +349,52 @@ struct DigFruit: View {
                 // Inisialisasi sayuran berdasarkan geometry
                 let beetrootPositions: [CGPoint] = [
                     //atas
-                    CGPoint(x: geometry.size.width / 2 - 550, y: geometry.size.height / 2 + 90 - 100),
-                    CGPoint(x: geometry.size.width / 2 - 370, y: geometry.size.height / 2 + 90 - 100),
-                    CGPoint(x: geometry.size.width / 2 - 210, y: geometry.size.height / 2 + 90 - 100),
-                    CGPoint(x: geometry.size.width / 2 - 60, y: geometry.size.height / 2 + 90 - 100),
+                    CGPoint(x: geometry.size.width / 2 - 510, y: geometry.size.height / 2 + 90 - 80),
+                    CGPoint(x: geometry.size.width / 2 - 380, y: geometry.size.height / 2 + 90 - 80),
+                    CGPoint(x: geometry.size.width / 2 - 230, y: geometry.size.height / 2 + 90 - 80),
+                    CGPoint(x: geometry.size.width / 2 - 95, y: geometry.size.height / 2 + 90 - 80),
                     
                     //bawah
-                    CGPoint(x: geometry.size.width / 2 - 130, y: geometry.size.height / 2 + 90 - 40),
-                    CGPoint(x: geometry.size.width / 2 - 290, y: geometry.size.height / 2 + 90 - 40),
-                    CGPoint(x: geometry.size.width / 2 - 460, y: geometry.size.height / 2 + 90 - 40),
+                    CGPoint(x: geometry.size.width / 2 - 165, y: geometry.size.height / 2 + 90 - 20),
+                    CGPoint(x: geometry.size.width / 2 - 310, y: geometry.size.height / 2 + 90 - 20),
+                    CGPoint(x: geometry.size.width / 2 - 450, y: geometry.size.height / 2 + 90 - 20),
                 ]
                 
                 
                 let radishPositions: [CGPoint] = [
                     //atas
-                    CGPoint(x: geometry.size.width / 2 - 550, y: geometry.size.height / 2 + 90 - 100 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 370, y: geometry.size.height / 2 + 90 - 100 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 210, y: geometry.size.height / 2 + 90 - 100 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 60, y: geometry.size.height / 2 + 90 - 100 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 510, y: geometry.size.height / 2 + 90 - 80 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 380, y: geometry.size.height / 2 + 90 - 80 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 230, y: geometry.size.height / 2 + 90 - 80 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 95, y: geometry.size.height / 2 + 90 - 80 + 220),
                     
                     //bawah
-                    CGPoint(x: geometry.size.width / 2 - 130, y: geometry.size.height / 2 + 90 - 40 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 290, y: geometry.size.height / 2 + 90 - 40 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 460, y: geometry.size.height / 2 + 90 - 40 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 165, y: geometry.size.height / 2 + 90 - 20 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 310, y: geometry.size.height / 2 + 90 - 20 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 450, y: geometry.size.height / 2 + 90 - 20 + 220),
                 ]
                 let tanahPositions: [CGPoint] = [
-                    CGPoint(x: geometry.size.width / 2 - 550, y: geometry.size.height / 2 + 90 - 100),
-                    CGPoint(x: geometry.size.width / 2 - 370, y: geometry.size.height / 2 + 90 - 100),
-                    CGPoint(x: geometry.size.width / 2 - 210, y: geometry.size.height / 2 + 90 - 100),
-                    CGPoint(x: geometry.size.width / 2 - 60, y: geometry.size.height / 2 + 90 - 100),
+                    //atas
+                    CGPoint(x: geometry.size.width / 2 - 510, y: geometry.size.height / 2 + 90 - 80),
+                    CGPoint(x: geometry.size.width / 2 - 380, y: geometry.size.height / 2 + 90 - 80),
+                    CGPoint(x: geometry.size.width / 2 - 230, y: geometry.size.height / 2 + 90 - 80),
+                    CGPoint(x: geometry.size.width / 2 - 95, y: geometry.size.height / 2 + 90 - 80),
                     
                     //bawah
-                    CGPoint(x: geometry.size.width / 2 - 130, y: geometry.size.height / 2 + 90 - 40),
-                    CGPoint(x: geometry.size.width / 2 - 290, y: geometry.size.height / 2 + 90 - 40),
-                    CGPoint(x: geometry.size.width / 2 - 460, y: geometry.size.height / 2 + 90 - 40),
+                    CGPoint(x: geometry.size.width / 2 - 165, y: geometry.size.height / 2 + 90 - 20),
+                    CGPoint(x: geometry.size.width / 2 - 310, y: geometry.size.height / 2 + 90 - 20),
+                    CGPoint(x: geometry.size.width / 2 - 450, y: geometry.size.height / 2 + 90 - 20),
                     
                     //atas
-                    CGPoint(x: geometry.size.width / 2 - 550, y: geometry.size.height / 2 + 90 - 100 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 370, y: geometry.size.height / 2 + 90 - 100 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 210, y: geometry.size.height / 2 + 90 - 100 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 60, y: geometry.size.height / 2 + 90 - 100 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 510, y: geometry.size.height / 2 + 90 - 80 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 380, y: geometry.size.height / 2 + 90 - 80 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 230, y: geometry.size.height / 2 + 90 - 80 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 95, y: geometry.size.height / 2 + 90 - 80 + 220),
                     
                     //bawah
-                    CGPoint(x: geometry.size.width / 2 - 130, y: geometry.size.height / 2 + 90 - 40 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 290, y: geometry.size.height / 2 + 90 - 40 + 220),
-                    CGPoint(x: geometry.size.width / 2 - 460, y: geometry.size.height / 2 + 90 - 40 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 165, y: geometry.size.height / 2 + 90 - 20 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 310, y: geometry.size.height / 2 + 90 - 20 + 220),
+                    CGPoint(x: geometry.size.width / 2 - 450, y: geometry.size.height / 2 + 90 - 20 + 220),
                 ]
                 
                 for beetrootPosition in beetrootPositions {
@@ -357,15 +414,22 @@ struct DigFruit: View {
         
     }
     private func checkWinCondition() {
-        if randomVegetableType == "radish" && angka == correctlyPlacedRadishes{
-            print("completed!")
+        if randomVegetableType == "radish" && angka == correctlyPlacedRadishes && correctlyPlacedBeetroots == 0{
             hasWon = true
         }
-        if randomVegetableType == "beetroot" && angka == correctlyPlacedBeetroots{
-            print("completed!")
+        if randomVegetableType == "beetroot" && angka == correctlyPlacedBeetroots && correctlyPlacedRadishes == 0{
             hasWon = true
         }
     }
+    private func startTimer() {
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+                withAnimation {
+                    showTapIcon = false
+                    isSwipeActive = false
+
+                }
+            }
+        }
     private func hitungBuah() {
         correctlyPlacedRadishes = 0
         correctlyPlacedBeetroots = 0

@@ -47,11 +47,11 @@ struct Shop: View {
     @State var pages: Int=0
     //    var isipages: [Item]
     
-    //    init() {
-    //        let counts = inventoryItemss
-    //        pages = Int((inventoryItemss.count-1)  / 8)
-    ////        isipages = counts
-    //    }
+//        init() {
+////            let counts = inventoryItemss
+////            pages = Int((inventoryItemss.count-1)  / 8)
+////    //        isipages = counts
+//        }
     
     
     var body: some View {
@@ -67,9 +67,10 @@ struct Shop: View {
                     .edgesIgnoringSafeArea(.all)
                     .onAppear(){
                         pages = Int((inventoryItemss.count-1)  / 8)
-                        
-                    }
-                
+                          
+                                initializeBuyerData()
+                            }
+                   
                 
                 //                ZStack{
                 Image("shop-dalem")
@@ -284,6 +285,7 @@ struct OrderView: View {
     ) var items: FetchedResults<Item>
     var body: some View {
         VStack {
+            
             if let firstOrder = buyers[index].orders.first {
                 HStack {
                     ForEach(firstOrder.items.sorted(by: >), id: \.key) { key, value in
