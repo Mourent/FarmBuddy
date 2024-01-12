@@ -1,0 +1,62 @@
+[
+    {
+        "id_item": "1",
+        "name": "Apple",
+        "image_path": "apple",
+        "count":10
+    },
+    {
+        "id_item": "2",
+        "name": "BeetRoot",
+        "image_path": "df-beetroot-1",
+        "count":10
+    },
+    {
+        "id_item": "3",
+        "name": "Chicken",
+        "image_path": "chikenmeat",
+        "count":10
+    },
+    {
+        "id_item": "4",
+        "name": "Egg",
+        "image_path": "telur",
+        "count":10
+    },
+    {
+        "id_item": "5",
+        "name": "Fish",
+        "image_path": "fish",
+        "count":10
+    },
+    {
+        "id_item": "6",
+        "name": "Honey",
+        "image_path": "honey",
+        "count":10
+    },
+    {
+        "id_item": "7",
+        "name": "Lemon",
+        "image_path": "lemon",
+        "count":10
+    },
+    {
+        "id_item": "8",
+        "name": "Milk",
+        "image_path": "milk",
+        "count":10
+    },
+    {
+        "id_item": "9",
+        "name": "Radish",
+        "image_path": "df-radish-1",
+        "count":10
+    },
+    {
+        "id_item": "10",
+        "name": "Wool",
+        "image_path": "wool",
+        "count":10
+    }
+]
